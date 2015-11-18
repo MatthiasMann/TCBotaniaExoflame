@@ -1,0 +1,16 @@
+[
+{
+  "modid": "TCBotaniaExoflame",
+  "name": "TCBotaniaExoflame",
+  "description": "Botania Exoflame support for Thaumcraft's Alchemical Furnace!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Matthias Mann"],
+  "credits": "BluSunrize for the core mod template",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
