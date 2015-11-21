@@ -53,6 +53,8 @@ public class PatchTileAlchemyFurnace extends ClassVisitor implements Opcodes {
         gv.visitFieldInsn(GETFIELD, owner, "smeltTime", "I");
         gv.visitInsn(ICONST_1);
         gv.visitInsn(IADD);
+        gv.visitIntInsn(BIPUSH, 100);
+        gv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "max", "(II)I", false);
         gv.visitFieldInsn(PUTFIELD, owner, "furnaceBurnTime", "I");
         gv.visitVarInsn(ALOAD, 0);
         gv.visitFieldInsn(GETFIELD, owner, worldObj.getName(), "Lnet/minecraft/world/World;");
