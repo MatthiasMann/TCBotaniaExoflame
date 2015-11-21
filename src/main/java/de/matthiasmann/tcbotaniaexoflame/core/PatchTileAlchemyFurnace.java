@@ -11,8 +11,16 @@ import org.objectweb.asm.Label;
 public class PatchTileAlchemyFurnace extends ClassVisitor implements Opcodes {
     private String owner;
 
+    private static final ObfSafeName worldObj = new ObfSafeName("worldObj", "field_145850_b");
+    private static final ObfSafeName isRemote = new ObfSafeName("isRemote", "field_72995_K");
+    private static final ObfSafeName markBlockForUpdate = new ObfSafeName("markBlockForUpdate", "func_147471_g");
+    private static final ObfSafeName onInventoryChanged = new ObfSafeName("onInventoryChanged", "func_70296_d");
+    private static final ObfSafeName xCoord = new ObfSafeName("xCoord", "field_145851_c");
+    private static final ObfSafeName yCoord = new ObfSafeName("yCoord", "field_145848_d");
+    private static final ObfSafeName zCoord = new ObfSafeName("zCoord", "field_145849_e");
+    
     public PatchTileAlchemyFurnace(ClassVisitor cv) {
-        super(Opcodes.ASM4, cv);
+        super(Opcodes.ASM5, cv);
     }
     
     @Override
@@ -36,8 +44,8 @@ public class PatchTileAlchemyFurnace extends ClassVisitor implements Opcodes {
         // generate "public void boostBurnTime()" method
         gv = cv.visitMethod(ACC_PUBLIC, "boostBurnTime", "()V", null, null);
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitFieldInsn(GETFIELD, owner, "field_145850_b", "Lnet/minecraft/world/World;");
-        gv.visitFieldInsn(GETFIELD, "net/minecraft/world/World", "field_72995_K", "Z");
+        gv.visitFieldInsn(GETFIELD, owner, worldObj.getName(), "Lnet/minecraft/world/World;");
+        gv.visitFieldInsn(GETFIELD, "net/minecraft/world/World", isRemote.getName(), "Z");
         Label end = new Label();
         gv.visitJumpInsn(IFNE, end);
         gv.visitVarInsn(ALOAD, 0);
@@ -47,16 +55,16 @@ public class PatchTileAlchemyFurnace extends ClassVisitor implements Opcodes {
         gv.visitInsn(IADD);
         gv.visitFieldInsn(PUTFIELD, owner, "furnaceBurnTime", "I");
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitFieldInsn(GETFIELD, owner, "field_145850_b", "Lnet/minecraft/world/World;");
+        gv.visitFieldInsn(GETFIELD, owner, worldObj.getName(), "Lnet/minecraft/world/World;");
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitFieldInsn(GETFIELD, owner, "field_145851_c", "I");
+        gv.visitFieldInsn(GETFIELD, owner, xCoord.getName(), "I");
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitFieldInsn(GETFIELD, owner, "field_145848_d", "I");
+        gv.visitFieldInsn(GETFIELD, owner, yCoord.getName(), "I");
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitFieldInsn(GETFIELD, owner, "field_145849_e", "I");
-        gv.visitMethodInsn(INVOKEVIRTUAL, "net/minecraft/world/World", "func_147471_g", "(III)V", false);
+        gv.visitFieldInsn(GETFIELD, owner, zCoord.getName(), "I");
+        gv.visitMethodInsn(INVOKEVIRTUAL, "net/minecraft/world/World", markBlockForUpdate.getName(), "(III)V", false);
         gv.visitVarInsn(ALOAD, 0);
-        gv.visitMethodInsn(INVOKEVIRTUAL, owner, "func_70296_d", "()V", false);
+        gv.visitMethodInsn(INVOKEVIRTUAL, owner, onInventoryChanged.getName(), "()V", false);
         gv.visitLabel(end); 
         gv.visitInsn(RETURN);
         gv.visitMaxs(5, 1);
@@ -107,7 +115,7 @@ public class PatchTileAlchemyFurnace extends ClassVisitor implements Opcodes {
         private final String owner;
         
         MethodCallAdapter(MethodVisitor mv, String owner) {
-            super(Opcodes.ASM4, mv);
+            super(Opcodes.ASM5, mv);
             this.owner = owner;
         }
 

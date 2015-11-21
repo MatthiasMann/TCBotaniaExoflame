@@ -6,8 +6,10 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 @IFMLLoadingPlugin.MCVersion("1.7.10")
 @IFMLLoadingPlugin.Name(TCBotaniaExoflameCoreLoader.NAME)
+@IFMLLoadingPlugin.SortingIndex(Integer.MAX_VALUE)
 public class TCBotaniaExoflameCoreLoader implements IFMLLoadingPlugin {
     public static final String NAME = "TCBotaniaExoflame";
+    public static boolean runtimeDeobfEnabled = false;
     
     @Override
     public String[] getASMTransformerClass() {
@@ -26,6 +28,7 @@ public class TCBotaniaExoflameCoreLoader implements IFMLLoadingPlugin {
     
     @Override
     public void injectData(Map<String, Object> data) {
+        runtimeDeobfEnabled = (Boolean) data.get("runtimeDeobfuscationEnabled");
     }
     
     @Override
