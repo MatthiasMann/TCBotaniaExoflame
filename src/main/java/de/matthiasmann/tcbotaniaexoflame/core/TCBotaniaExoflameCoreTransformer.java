@@ -22,6 +22,15 @@ public class TCBotaniaExoflameCoreTransformer implements IClassTransformer {
             return wr.toByteArray();
 	    }
 	    
+	    if("thaumcraft.common.tiles.TileResearchTable".equals(className)) {
+            LogManager.getLogger("TCBotaniaExoflame").info("Patching 'TileResearchTable'");
+            ClassReader rd = new ClassReader(origCode);
+            ClassWriter wr = new ClassWriter(0);
+            ClassVisitor patcher = new PatchTileResearchTable(wr);
+            rd.accept(patcher, 0);
+            return wr.toByteArray();
+	    }
+	    
 	    if("tuhljin.automagy.tiles.TileEntityBoiler".equals(className)) {
 	        // TileEntityBoiler uses the exact same fields and methods as TileAlchemyFurnace
             LogManager.getLogger("TCBotaniaExoflame").info("Patching 'TileEntityBoiler'");
