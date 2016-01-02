@@ -4,14 +4,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
 import net.minecraft.init.Blocks;
 
-import team.chisel.block.BlockCarvableBookshelf;
-
-import tuhljin.automagy.blocks.BlockBookshelfEnchanted;
-
 public class Callouts {
 
     public static boolean isBookshelf(Block b) {
-        return (b == Blocks.bookshelf) || (b instanceof BlockBookshelf) || (b instanceof BlockCarvableBookshelf) || (b instanceof BlockBookshelfEnchanted);
+        if(b == null)
+            return false;
+        if((b == Blocks.bookshelf) || (b instanceof BlockBookshelf))
+            return true;
+        String name = b.getClass().getName();
+        return "team.chisel.block.BlockCarvableBookshelf".equals(name) ||
+            "tuhljin.automagy.blocks.BlockBookshelfEnchanted".equals(name);
     }
     
 }
